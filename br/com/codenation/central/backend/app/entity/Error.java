@@ -17,9 +17,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "errors")
+@Entity(name = "errors")
 public class Error {
 
     @Id
@@ -36,7 +35,8 @@ public class Error {
     @NotNull
     private String details;
 
-    //errorLevel
+    @NotNull
+    ErrorLevel errorLevel;
 
     @ManyToOne
     private User reportedBy;
