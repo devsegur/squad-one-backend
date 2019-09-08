@@ -38,12 +38,15 @@ public class Error {
     @NotNull
     ErrorLevel errorLevel;
 
-    @ManyToOne
-    private User reportedBy;
+    @NotNull
+    Environment environment;
 
     @NotNull
     @Size(max = 100)
     private String origin;
+
+    @ManyToOne
+    private User reportedBy;
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
