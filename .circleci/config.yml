@@ -53,11 +53,9 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - build
-      - deploy:
-              requires:
-                      - build
-              filters:
-                      branches:
-                              only:
-                                      - master
+      - build:
+          - filters:
+              - branches:
+                  - only:
+                      - master
+                      - qa
