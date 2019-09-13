@@ -4,7 +4,7 @@ jobs:
     parallelism: 1
     environment:
       _JAVA_OPTIONS: "-Xmx3g"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1"
     docker:
       - image: circleci/openjdk:11.0.3-jdk-stretch
     steps:
@@ -54,3 +54,10 @@ workflows:
   workflow:
     jobs:
       - build
+      - deploy:
+              requires:
+                      - build
+              filters:
+                      branches:
+                              only:
+                                      - master
