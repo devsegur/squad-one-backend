@@ -53,9 +53,4 @@ workflows:
   version: 2
   workflow:
     jobs:
-      build:
-        - filters:
-            - branches:
-                - only:
-                    - master
-                    - qa
+      build
