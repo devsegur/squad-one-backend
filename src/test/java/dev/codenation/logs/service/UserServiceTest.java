@@ -5,13 +5,16 @@ import dev.codenation.logs.repository.UserRepository;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.internal.matchers.Equals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,13 +60,13 @@ public class UserServiceTest {
         User user1 = createUser();
         User user2 = createUser();
         User user3 = createUser();
-        List<User> users = Arrays.asList(user1, user2, user3);
+        Page<User> users = new PageImpl<>(Arrays.asList(user1, user2, user3));
 
-        when(repository.findAll()).thenReturn(users);
+        when(repository.findAll(Pageable.unpaged())).thenReturn(users);
 
-        List<User> usersFound = repository.findAll();
+        Page<User> usersFound = repository.findAll(Pageable.unpaged());
 
-        assertThat(usersFound.size(), Matchers.equalTo(3));
+        assertThat(usersFound.getTotalElements(), Matchers.equalTo(3L));
         assertThat(usersFound, Matchers.equalTo(users));
     }
 
