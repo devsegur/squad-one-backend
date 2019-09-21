@@ -1,7 +1,7 @@
 package dev.codenation.logs.controller;
 
 import dev.codenation.logs.domain.entity.User;
-import dev.codenation.logs.exception.userException.UserExistsException;
+import dev.codenation.logs.exception.users.UserExistsException;
 import dev.codenation.logs.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

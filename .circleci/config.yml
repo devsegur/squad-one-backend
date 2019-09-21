@@ -5,8 +5,6 @@ jobs:
     environment:
       _JAVA_OPTIONS: "-Xmx3g"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1"
-      USERDB: "squadone"
-      PASSWORDDB: "passwordDatabase"
     docker:
       - image: circleci/openjdk:8-jdk-stretch
     steps:
@@ -29,6 +27,7 @@ jobs:
             GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests --stacktrace",$i}')
             echo "Prepared arguments for Gradle: $GRADLE_ARGS"
             ./gradlew test $GRADLE_ARGS
+
       - save_cache:
           paths:
             - ~/.gradle/wrapper
@@ -51,8 +50,36 @@ jobs:
             fi
       - store_artifacts:
           path: build/libs
+
+  Sonarize:
+    parallelism: 1
+    environment:
+      _JAVA_OPTIONS: "-Xmx3g"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1"
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - run:
+          name: Run Sonar
+          command: |
+            cd src/test/java
+            cd ../../..
+            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print " --stacktrace",$i}')
+            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
+            ./gradlew sonarqube \
+            -Dsonar.projectKey=IT_IS_SPARTAN \
+            -Dsonar.organization=squad-one-it \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=00c3c958b87be7c18bf80b19c23b21e73ca5a92f
+
 workflows:
   version: 2
   workflow:
     jobs:
       - build
+      - Sonarize
