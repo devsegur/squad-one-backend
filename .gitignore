@@ -1,34 +1,13 @@
-HELP.md
 .gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**
-!**/src/test/**
-/src/main/resources/application.properties
-.circleci
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
+/build/
 .idea
-*.iws
-*.iml
-*.ipr
-out/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+gradle-app.setting
 
-### VS Code ###
-.vscode/
+!gradle-wrapper.jar
+
+.gradletasknamecache
+
+# gradle/wrapper/gradle-wrapper.properties
+
+# spring

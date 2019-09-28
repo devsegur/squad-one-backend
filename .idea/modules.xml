@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/log-repo.iml" filepath="$PROJECT_DIR$/.idea/modules/log-repo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/log-repo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/log-repo.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/log-repo.test.iml" filepath="$PROJECT_DIR$/.idea/modules/log-repo.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-http.iml" filepath="$PROJECT_DIR$/spring-http.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/squad-one-backend.iml" filepath="$PROJECT_DIR$/.idea/modules/squad-one-backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/squad-one-backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/squad-one-backend.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/squad-one-backend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/squad-one-backend.test.iml" />
     </modules>
   </component>
 </project>

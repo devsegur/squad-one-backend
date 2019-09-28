@@ -1,10 +1,8 @@
 package dev.codenation.logs.mapper;
 
 import dev.codenation.logs.domain.entity.Log;
-import dev.codenation.logs.parameter.LogFilter;
+import dev.codenation.logs.dto.LogFilterDTO;
 import org.mapstruct.*;
-
-import java.util.Optional;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE )
 public interface LogMapper {
@@ -12,16 +10,16 @@ public interface LogMapper {
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "hash", target = "hash"),
-            @Mapping(source = "message", target = "logDetail.message"),
-            @Mapping(source = "details", target = "logDetail.details"),
-            @Mapping(source = "severity", target = "logDetail.severity"),
-            @Mapping(source = "environment", target = "origin.environment"),
-            @Mapping(source = "origin", target = "origin.origin"),
+            @Mapping(source = "message", target = "logDetailVO.message"),
+            @Mapping(source = "details", target = "logDetailVO.details"),
+            @Mapping(source = "severityEnum", target = "logDetailVO.severityEnum"),
+            @Mapping(source = "environmentEnum", target = "originVO.environmentEnum"),
+            @Mapping(source = "origin", target = "originVO.origin"),
             @Mapping(source = "archived", target = "archived"),
             @Mapping(source = "archivedBy", target = "archivedBy.id"),
             @Mapping(source = "reportedBy", target = "reportedBy.id")
     })
-    Log map(LogFilter filter);
+    Log map(LogFilterDTO filter);
 
 //    @Named("optionalWrapper")
 //    default <T> T optionalWrapper(Optional<T> optional) {

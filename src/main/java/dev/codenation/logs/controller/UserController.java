@@ -1,13 +1,15 @@
 package dev.codenation.logs.controller;
 
 import dev.codenation.logs.domain.entity.User;
-import dev.codenation.logs.exception.users.UserExistsException;
+import dev.codenation.logs.dto.UserFindFilterDTO;
 import dev.codenation.logs.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -18,11 +20,13 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ExceptionHandler(UserExistsException.class)
-    //Implementar o Request Body com UserDTO ou algo assim pra receber do front não todos os parametros
-    // Pq eu vou dormir agora kkkkkkkk
     public void createUser(@Valid @RequestBody User user) {
         service.save(user);
+    }
+
+    @GetMapping
+    public List<UserFindFilterDTO> getUsers(){
+        return service.findAllDTO();
     }
 
 }

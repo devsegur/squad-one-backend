@@ -2,8 +2,8 @@ package dev.codenation.logs.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import dev.codenation.logs.domain.valueObject.LogDetail;
-import dev.codenation.logs.domain.valueObject.Origin;
+import dev.codenation.logs.domain.vo.LogDetailVO;
+import dev.codenation.logs.domain.vo.OriginVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +27,7 @@ import java.util.UUID;
 public class Log {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @NotNull
@@ -36,11 +36,11 @@ public class Log {
 
     @NotNull
     @Embedded
-    private LogDetail logDetail;
+    private LogDetailVO logDetailVO;
 
     @NotNull
     @Embedded
-    private Origin origin;
+    private OriginVO originVO;
 
     @NotNull
     @Builder.Default
