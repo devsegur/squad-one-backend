@@ -9,8 +9,19 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
+    @Mappings({
+            @Mapping(source = "firstName", target = "firstName"),
+            @Mapping(source = "lastName", target = "lastName"),
+            @Mapping(source = "email", target = "email")
+    })
+    User map(UserFilterRequestDTO filter);
 
-    User map(UserFindFilterDTO filter);
-
-    List<UserFindFilterDTO> map(List<User> all);
+    @Mappings({
+            @Mapping(source = "firstName", target = "firstName"),
+            @Mapping(source = "lastName", target = "lastName"),
+            @Mapping(source = "email", target = "email"),
+            @Mapping(source = "password", target = "password")
+    })
+    User map(UserRequestDTO request);
 }
+

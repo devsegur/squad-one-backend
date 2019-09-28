@@ -18,18 +18,23 @@ public abstract class AbstractService<R extends JpaRepository<T, ID>, T, ID> {
         return repository.findById(id);
     }
 
-    public List<T> findAll(Example<T> example, Sort sort) {
-        return repository.findAll(example, sort);
+    public Page<T> findAll(Example<T> example, Pageable pageable) {
+        return repository.findAll(example, pageable);
     }
 
-    public Page<T> findAll(Example<T> example, Pageable pageable, Sort sort) {
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-        return repository.findAll(example, pageable);
+    public List<T> findAll(Example<T> example) {
+        return repository.findAll(example);
+    }
+
+    public void delete(T object) {
+        repository.delete((T) object);
     }
 
     public T save(T object) {
         return (T) repository.save(object);
     }
 
-    public abstract List<?> findAllDTO();
+    public List<T> save(List<T> list) {
+        return repository.saveAll(list);
+    }
 }

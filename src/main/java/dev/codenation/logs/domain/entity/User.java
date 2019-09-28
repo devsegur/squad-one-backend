@@ -1,6 +1,7 @@
 package dev.codenation.logs.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,9 +49,11 @@ public class User {
     @Size(max = 100)
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "reportedBy")
     private List<Log> logs;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "archivedBy")
     private List<Log> archivedLogs;
 
@@ -61,4 +64,5 @@ public class User {
     @LastModifiedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime updatedAt;
+
 }

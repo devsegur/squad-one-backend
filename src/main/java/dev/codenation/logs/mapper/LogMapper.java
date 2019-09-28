@@ -3,7 +3,6 @@ package dev.codenation.logs.mapper;
 import dev.codenation.logs.domain.entity.Log;
 import dev.codenation.logs.dto.LogFilterDTO;
 import org.mapstruct.*;
-
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE )
 public interface LogMapper {
 
@@ -21,8 +20,6 @@ public interface LogMapper {
     })
     Log map(LogFilterDTO filter);
 
-//    @Named("optionalWrapper")
-//    default <T> T optionalWrapper(Optional<T> optional) {
-//        return optional.orElse(null);
-//    }
+    Log map(LogFilterRequestDTO filter);
+    List<Log> map(List<LogFilterRequestDTO> filter);
 }

@@ -75,7 +75,8 @@ jobs:
             -Dsonar.projectKey=IT_IS_SPARTAN \
             -Dsonar.organization=squad-one-it \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=00c3c958b87be7c18bf80b19c23b21e73ca5a92f
+            -Dsonar.login=00c3c958b87be7c18bf80b19c23b21e73ca5a92f \
+            -Dsonar.branch.name=$(git branch | grep \* | cut -d ' ' -f2)
 
 workflows:
   version: 2
