@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/IdeaProjects.squad-one-backend.log-repo.iml" filepath="$PROJECT_DIR$/.idea/modules/IdeaProjects.squad-one-backend.log-repo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/IdeaProjects.squad-one-backend.log-repo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/IdeaProjects.squad-one-backend.log-repo.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dev.codenation.log-repo.iml" filepath="$PROJECT_DIR$/.idea/modules/dev.codenation.log-repo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dev.codenation.log-repo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/dev.codenation.log-repo.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dev.codenation.log-repo.test.iml" filepath="$PROJECT_DIR$/.idea/modules/dev.codenation.log-repo.test.iml" />
