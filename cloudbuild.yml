@@ -12,13 +12,13 @@ steps:
   - --cluster=logsone-cluster
   env:
   - name: DATABASE
-    value: $DATABASE
+    value: '$DATABASE'
   - name: USERDB
-    value: $USERDB
+    value: '$USERDB'
   - name: PASSWORDDB
-    value: $PASSWORDDB
+    value: '$PASSWORDDB'
   - name: PORT
-    value: $PORT
+    value: '$PORT'
 
 images:
 - 'gcr.io/$PROJECT_ID/logsone'
