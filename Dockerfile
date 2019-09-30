@@ -5,3 +5,4 @@ COPY . /opt/logsone/
 WORKDIR /opt/logsone
 RUN bash /opt/logsone/gradlew build
 CMD bash /opt/logsone/gradlew bootRun
+EXPOSE 8080
