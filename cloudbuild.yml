@@ -10,7 +10,10 @@ steps:
   - --image=gcr.io/$PROJECT_ID/logsone
   - --location=us-west2-a
   - --cluster=logsone-cluster
-  env: ['DATABASE=$DATABASE','USERDB=$USERDB','PASSWORDDB=$PASSWORDDB','PORT=$PORT']
+  - 'DATABASE=$DATABASE'
+  - 'USERDB=$USERDB'
+  - 'PASSWORDDB=$PASSWORDDB'
+  - 'PORT=$PORT'
 
 images:
 - 'gcr.io/$PROJECT_ID/logsone'
