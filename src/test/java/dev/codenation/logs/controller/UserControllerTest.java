@@ -71,7 +71,6 @@ public class UserControllerTest {
 
     @Test
     public void verifyingSavesUserSuccessfully() throws Exception {
-
         getAuthHeader();
         //Dado
         UserRequestDTO userRequestDTO = userRequestDTOUtil.createUserRequestDTOstefano();
@@ -79,11 +78,11 @@ public class UserControllerTest {
         //Quando
         ResultActions user = mvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header("Authorization", "Bearer " + this.token)
                 .content(UserRequestDTOUtil.convertObjectToJsonBytes(userRequestDTO)));
         //Entao
         user.andExpect(status().isCreated());
     }
-
 
 
     private void getAuthHeader() throws Exception {
@@ -100,28 +99,12 @@ public class UserControllerTest {
                             .with(httpBasic(client, secret)))
                     .andExpect(status().isOk());
 
-            String refreshToken = parser.parseMap(login
-                    .andReturn()
-                    .getResponse()
-                    .getContentAsString()).get("refresh_token").toString();
-
-            params.clear();
-            params.add("grant_type", "refresh_token");
-            params.add("refresh_token", refreshToken);
-
-            ResultActions refresh = mvc.perform(
-                    post("/oauth/token")
-                            .params(params)
-                            .accept("application/json;charset=UTF-8")
-                            .with(httpBasic(client, secret)))
-                    .andExpect(status().isOk());
-
-            String token = parser.parseMap(refresh
+            String accessToken = parser.parseMap(login
                     .andReturn()
                     .getResponse()
                     .getContentAsString()).get("access_token").toString();
 
-            this.token = String.format("Bearer %s", token);
+            this.token = accessToken;
         }
     }
 }
