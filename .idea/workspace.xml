@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="628d2cfd-2a62-4ab0-b77d-88c74921554f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/dev/codenation/logs/controller/UserControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/dev/codenation/logs/util/UserFilterRequestDTOUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/dev/codenation/logs/util/UserRequestDTOUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/dev/codenation/logs/LogRepoApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dev/codenation/logs/LogRepoApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application.properties" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +61,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -90,7 +108,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Background" />
+    <property name="show.inlinked.gradle.project.popup" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -104,13 +124,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.log-repo [build]">
-    <configuration name="LogMapperTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.UserControllerTest.verifyingSavesUserSuccessfully">
+    <configuration name="LogRepoApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dev.codenation.logs.LogRepoApplication" />
+      <module name="Codenadion.squad-one-backend.log-repo.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dev.codenation.logs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;dev.codenation.logs.mapper.LogMapperTest&quot;" />
+        <option name="scriptParameters" value="--tests &quot;dev.codenation.logs.controller.UserControllerTest&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -125,12 +158,12 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Tests in 'squad-one-backend.log-repo.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserControllerTest.verifyingEndpointFindByIdReturnsCorrectUser" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests *" />
+        <option name="scriptParameters" value="--tests &quot;dev.codenation.logs.controller.UserControllerTest.verifyingEndpointFindByIdReturnsCorrectUser&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -145,12 +178,12 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserMapperTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserControllerTest.verifyingIfEndpointFindByIdReturnsCorrectUser" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;dev.codenation.logs.mapper.UserMapperTest&quot;" />
+        <option name="scriptParameters" value="--tests &quot;dev.codenation.logs.controller.UserControllerTest.verifyingIfEndpointFindByIdReturnsCorrectUser&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -165,12 +198,12 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserControllerTest.verifyingSavesUserSuccessfully" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;dev.codenation.logs.service.UserServiceTest&quot;" />
+        <option name="scriptParameters" value="--tests &quot;dev.codenation.logs.controller.UserControllerTest.verifyingSavesUserSuccessfully&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -183,34 +216,15 @@
         <option name="vmOptions" />
       </ExternalSystemSettings>
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="log-repo [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.log-repo [build]" />
-        <item itemvalue="Gradle.Tests in 'squad-one-backend.log-repo.test'" />
-        <item itemvalue="Gradle.UserMapperTest" />
-        <item itemvalue="Gradle.LogMapperTest" />
-        <item itemvalue="Gradle.UserServiceTest" />
+        <item itemvalue="Gradle.UserControllerTest.verifyingSavesUserSuccessfully" />
+        <item itemvalue="Gradle.UserControllerTest" />
+        <item itemvalue="Gradle.UserControllerTest.verifyingIfEndpointFindByIdReturnsCorrectUser" />
+        <item itemvalue="Gradle.UserControllerTest.verifyingEndpointFindByIdReturnsCorrectUser" />
+        <item itemvalue="Application.LogRepoApplication" />
       </list>
     </recent_temporary>
   </component>

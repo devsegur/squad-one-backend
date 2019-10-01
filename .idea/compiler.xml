@@ -12,6 +12,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Codenadion.squad-one-backend.log-repo.main" target="1.8" />
+      <module name="Codenadion.squad-one-backend.log-repo.test" target="1.8" />
       <module name="dev.codenation.log-repo.main" target="1.8" />
       <module name="dev.codenation.log-repo.test" target="1.8" />
       <module name="log-repo.main" target="1.8" />
