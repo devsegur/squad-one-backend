@@ -4,7 +4,7 @@ import dev.codenation.logs.exception.message.model.AbstractConflictExistsExcepti
 
 public class UserExistsException extends AbstractConflictExistsException {
 
-    public UserExistsException(String message) {
+    public UserExistsException() {
         super("USER_EXISTS");
     }
 }

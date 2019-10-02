@@ -4,6 +4,7 @@ import dev.codenation.logs.exception.handler.AbstractExceptionHandler;
 import dev.codenation.logs.exception.message.log.LogCouldNotBeArchivedException;
 import dev.codenation.logs.exception.message.log.LogMismatchIdsException;
 import dev.codenation.logs.exception.message.log.LogNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

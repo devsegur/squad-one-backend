@@ -1,0 +1,16 @@
+#cloudbuild.yaml
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["build", "-t", "gcr.io/$PROJECT_ID/logsone", "."]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', '$REPO_NAME:latest', 'gcr.io/$PROJECT_ID/logsone:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/$PROJECT_ID/logsone"]
+- name: 'gcr.io/cloud-builders/gke-deploy:stable'
+  args:
+  - run
+  - --image=gcr.io/$PROJECT_ID/logsone:$TAG_NAME
+  - --location=us-west2-a
+  - --cluster=logsone-cluster
+images: ['gcr.io/$PROJECT_ID/logsone:$COMMIT_SHA']
+

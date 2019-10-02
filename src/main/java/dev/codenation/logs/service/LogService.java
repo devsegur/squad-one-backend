@@ -1,49 +1,81 @@
 package dev.codenation.logs.service;
 
 import dev.codenation.logs.domain.entity.Log;
+import dev.codenation.logs.domain.vo.UserInformation;
+import dev.codenation.logs.dto.request.LogArchiveRequestDTO;
+import dev.codenation.logs.dto.request.LogCreationDTO;
+import dev.codenation.logs.dto.request.LogFilterRequestDTO;
+import dev.codenation.logs.dto.response.AllLogSummaryResponseDTO;
+import dev.codenation.logs.dto.response.LogSumaryResponseDTO;
+import dev.codenation.logs.mapper.LogMapper;
 import dev.codenation.logs.repository.LogRepository;
+import dev.codenation.logs.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class LogService extends AbstractService<LogRepository, Log, UUID>{
+public class LogService extends AbstractService<LogRepository, Log, UUID> {
+
+    @Autowired
+    private LogRepository repository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository repositoryUser;
+
+    @Autowired
+    private LogMapper mapper;
 
     @Autowired
     public LogService(LogRepository repository) {
         super(repository);
     }
 
-    @Override
-    public List<Log> findAll(Example<Log> example, Sort sort) {
-        return super.findAll(example, sort);
+    public Page<LogSumaryResponseDTO> findAllGroupByHash(LogFilterRequestDTO filter, Pageable pageable) {
+        Log log = mapper.map(filter);
+        return repository.findAllSumarized(log.getLogDetail().getMessage(),
+                log.getLogDetail().getDetails(),
+                String.valueOf(log.getLogDetail().getSeverity()),
+                String.valueOf(log.getOrigin().getEnvironment()),
+                log.getOrigin().getOrigin(),
+                String.valueOf(log.getReportedBy().getId()),
+                pageable);
     }
 
-    @Override
-    public Log save(Log object) {
-        return super.save(object);
+//    public List<AllLogSummaryResponseDTO> findAll() {
+//        return mapper.map(repository.findAll());
+//    }
+
+    public Optional<Log> archiveLogById(UUID logId, LogArchiveRequestDTO filter) {
+        return repository.findById(logId).map(l -> setArchivedLogAndSave(filter, l));
     }
 
-    @Override
-    public List<?> findAllDTO() {
-        return null;
+    private Log setArchivedLogAndSave(LogArchiveRequestDTO filter, Log log) {
+        log.setArchived(filter.getArchived());
+        log.setId(filter.getUserId());
+        log.setArchivedBy(repositoryUser.getOne(filter.getUserId()));
+        log.setArchivedAt(LocalDateTime.now());
+        return repository.saveAndFlush(log);
     }
 
-    @Override
-    public Page<Log> findAll(Example<Log> example, Pageable pageable, Sort sort) {
-        return super.findAll(example, pageable, sort);
+    public Optional<Log> delete(UUID logId) {
+        return repository.findById(logId).map(l -> {
+            repository.delete(l);
+            return l;
+        });
     }
 
-    @Override
-    public Optional<Log> findById(UUID id) {
-        return super.findById(id);
+    public Log save(LogCreationDTO logCreationDTO){
+        logCreationDTO.setHash(logCreationDTO.getMessage().hashCode());
+        logCreationDTO.setReportedBy(userService.getUserInformation());
+       return repository.save(mapper.map(logCreationDTO));
     }
-
 }

@@ -1,25 +1,26 @@
 package dev.codenation.logs.service;
 
 import dev.codenation.logs.domain.entity.User;
-import dev.codenation.logs.dto.UserFindFilterDTO;
+import dev.codenation.logs.domain.vo.UserAuth;
+import dev.codenation.logs.domain.vo.UserInformation;
+import dev.codenation.logs.exception.message.user.UserNotFoundException;
 import dev.codenation.logs.mapper.UserMapper;
 import dev.codenation.logs.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserService extends AbstractService<UserRepository, User, UUID>{
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper mapper;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository repository) {
@@ -27,26 +28,27 @@ public class UserService extends AbstractService<UserRepository, User, UUID>{
     }
 
     @Override
-    public Optional<User> findById(UUID id) {
-        return super.findById(id);
+    public User save(User user) {
+        if (!user.getPassword().isEmpty()) {
+            user.setPassword(user.getPassword());
+        }
+        return (User) repository.save(user);
     }
 
-    @Override
-    public Page<User> findAll(Example<User> example, Pageable pageable, Sort sort) {
-        return super.findAll(example, pageable, sort);
+    public List<UserInformation> findAllInList() {
+        return mapper.map(repository.findAll());
     }
 
-    @Override
-    public User save(User object) {
-        return super.save(object);
+    public UserInformation getUserInformation() {
+        return mapper.map(getUserFromUserAuth());
     }
 
-    @Override
-    public List<User> findAll(Example<User> example, Sort sort) {
-        return super.findAll(example, sort);
+    private User getUserFromUserAuth() {
+        UserAuth principal = (UserAuth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findByEmail(principal.getUsername());
     }
 
-    public List<UserFindFilterDTO> findAllDTO() {
-        return userMapper.map(repository.findAll());
+    public UserInformation getUserInformation(UUID id) throws UserNotFoundException {
+        return mapper.mapInf(findById(id).orElseThrow(UserNotFoundException::new));
     }
 }

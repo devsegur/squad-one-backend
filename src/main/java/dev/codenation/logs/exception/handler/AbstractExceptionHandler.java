@@ -14,9 +14,4 @@ public abstract class AbstractExceptionHandler<T extends AbstractException> exte
 
     private T message;
 
-    @ExceptionHandler(AbstractNotFoundException.class)
-    private ResponseEntity<Object> entityNotFoundException(){
-        return new ResponseEntity<>(message.getMessage(),null);
-    }
-
 }

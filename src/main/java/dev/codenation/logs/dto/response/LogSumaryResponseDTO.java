@@ -1,18 +1,30 @@
 package dev.codenation.logs.dto.response;
 
-import dev.codenation.logs.domain.entity.Log;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotNull;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class LogSumaryResponseDTO {
-    private String total;
-    private Log log;
+public interface LogSumaryResponseDTO {
+
+    public String getHash();
+
+    public String getId();
+
+    public String getMessage();
+
+    public String getDetails();
+
+    public String getSeverity();
+
+    public String getEnvironment();
+
+    public String getOrigin();
+
+    public String getArchived();
+
+    public String getReportedBy();
+
+    public LocalDateTime getCreatedAt();
+
+    public String getOccurrences();
+
 }

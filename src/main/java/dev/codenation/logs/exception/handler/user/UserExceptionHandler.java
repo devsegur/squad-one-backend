@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class UserExceptionHandler extends AbstractExceptionHandler {
 
-    private UserExistsException userExistsMessage;
-    private UserNotFoundException userNotFoundMessage;
+    private UserExistsException userExistsException = new UserExistsException();
+    private UserNotFoundException userNotFoundException = new UserNotFoundException();
 
     @ExceptionHandler(UserNotFoundException.class)
     private ResponseEntity<Object> userNotFoundException(){
-        return new ResponseEntity<>(userNotFoundMessage.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(userNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserExistsException.class)
     private ResponseEntity<Object> userExistsException(){
-        return new ResponseEntity<>(userExistsMessage.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(userExistsException.getMessage(), HttpStatus.CONFLICT);
     }
 
 }
