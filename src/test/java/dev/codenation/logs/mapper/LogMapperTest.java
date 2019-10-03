@@ -4,7 +4,6 @@ import dev.codenation.logs.domain.entity.Log;
 import dev.codenation.logs.domain.enums.Environment;
 import dev.codenation.logs.domain.enums.Severity;
 import dev.codenation.logs.dto.request.LogFilterRequestDTO;
-import dev.codenation.logs.util.LogFilterRequestDTOUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,27 +22,42 @@ public class LogMapperTest {
     @Autowired
     private LogMapper mapper;
 
-    @Autowired
-    private LogFilterRequestDTOUtil logFilterRequestDTOUtil;
+    private UUID id_user = UUID.randomUUID();
+
+    private UUID id_log = UUID.randomUUID();
 
     @Test
     public void WhenMapLogFilterRequestDTO_ReturnLog(){
 
-        LogFilterRequestDTO request = logFilterRequestDTOUtil.createLogFilterRequestDTO();
+        LogFilterRequestDTO request = createLogFilterRequestDTO();
 
         Log log = mapper.map(request);
 
-        assertThat(log.getId(), Matchers.equalTo(logFilterRequestDTOUtil.getId_log()));
-        //assertThat(log.getHash().toString(), Matchers.equalTo("1234"));
+        assertThat(log.getId(), Matchers.equalTo(id_log));
+        assertThat(log.getHash().toString(), Matchers.equalTo("-1675388953"));
         assertThat(log.getLogDetail().getDetails(), Matchers.equalTo("Details"));
         assertThat(log.getArchived(), Matchers.equalTo(Boolean.TRUE));
-        assertThat(log.getArchivedBy().getId(), Matchers.equalTo(logFilterRequestDTOUtil.getId_user()));
+        assertThat(log.getArchivedBy().getId(), Matchers.equalTo(id_user));
         assertThat(log.getOrigin().getEnvironment(), Matchers.equalTo(Environment.DEV));
         assertThat(log.getLogDetail().getMessage(), Matchers.equalTo("Message"));
         assertThat(log.getOrigin().getOrigin(), Matchers.equalTo("Origin"));
-        assertThat(log.getReportedBy().getId(), Matchers.equalTo(logFilterRequestDTOUtil.getId_user()));
+        assertThat(log.getReportedBy().getId(), Matchers.equalTo(id_user));
         assertThat(log.getLogDetail().getSeverity(), Matchers.equalTo(Severity.WARNING));
     }
 
+
+    private LogFilterRequestDTO createLogFilterRequestDTO() {
+        return LogFilterRequestDTO.builder()
+                .id(id_log)
+                .details("Details")
+                .archived(Boolean.TRUE)
+                .archivedBy(id_user)
+                .environment(Environment.DEV)
+                .message("Message")
+                .origin("Origin")
+                .reportedBy(id_user)
+                .severity(Severity.WARNING)
+                .build();
+    }
 
 }

@@ -1,13 +1,13 @@
 package dev.codenation.logs.service;
 
-import dev.codenation.logs.domain.vo.LogDetail;
-import dev.codenation.logs.domain.vo.Origin;
 import dev.codenation.logs.domain.entity.Log;
 import dev.codenation.logs.domain.entity.User;
 import dev.codenation.logs.domain.enums.Environment;
 import dev.codenation.logs.domain.enums.Severity;
+import dev.codenation.logs.domain.vo.LogDetail;
+import dev.codenation.logs.domain.vo.Origin;
+import dev.codenation.logs.exception.message.log.LogNotFoundException;
 import dev.codenation.logs.repository.LogRepository;
-import dev.codenation.logs.util.LogUtil;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,9 +31,6 @@ public class LogServiceTest {
     @Autowired
     private LogService service;
 
-    @Autowired
-    private LogUtil logUtil;
-
     @MockBean
     private LogRepository repository;
 
@@ -41,19 +38,19 @@ public class LogServiceTest {
 
     @Before
     public void init_data() {
-        Log log1 = logUtil.createLog(Severity.DEBUG, "localhost", Environment.PROD, "details1");
-        Log log2 = logUtil.createLog(Severity.ERROR, "128.000", Environment.DEV, "details1");
-        Log log3 = logUtil.createLog(Severity.WARNING, "localhost", Environment.PROD, "details2");
-        Log log4 = logUtil.createLog(Severity.FATAL, "localhost", Environment.HMG, "details3");
-        Log log5 = logUtil.createLog(Severity.WARNING, "128.000", Environment.DEV, "details3");
-        Log log6 = logUtil.createLog(Severity.INFO, "localhost", Environment.PROD, "details4");
+        Log log1 = createLog(Severity.DEBUG, "localhost", Environment.PROD, "details1");
+        Log log2 = createLog(Severity.ERROR, "128.000", Environment.DEV, "details1");
+        Log log3 = createLog(Severity.WARNING, "localhost", Environment.PROD, "details2");
+        Log log4 = createLog(Severity.FATAL, "localhost", Environment.HMG, "details3");
+        Log log5 = createLog(Severity.WARNING, "128.000", Environment.DEV, "details3");
+        Log log6 = createLog(Severity.INFO, "localhost", Environment.PROD, "details4");
         logs = Arrays.asList(log1, log2, log3, log4, log5, log6);
     }
 
     @Test
-    public void WhenFindByValidId_LogShouldBeReturned() {
+    public void WhenFindByValidId_LogShouldBeReturned() throws LogNotFoundException {
         UUID id = UUID.randomUUID();
-        Log logExpected = logUtil.createLog();
+        Log logExpected = createLog();
         logExpected.setId(id);
         when(repository.findById(id)).thenReturn(Optional.of(logExpected));
 
@@ -66,7 +63,7 @@ public class LogServiceTest {
     @Test
     public void WhenSaveLog_ReturnSameLog() {
         UUID id = UUID.randomUUID();
-        Log logExpected = logUtil.createLog();
+        Log logExpected = createLog();
         logExpected.setId(id);
         when(repository.save(logExpected)).thenReturn(logExpected);
 
@@ -197,4 +194,85 @@ public class LogServiceTest {
         assertThat(pageLogsFound, Matchers.equalTo(pageLogsFilteredAndSorted));
     }
 
+    private Log createLog() {
+        return Log.builder()
+                .archived(false)
+                .hash(1)
+                .logDetail(LogDetail.builder()
+                        .message("Message")
+                        .details("Details")
+                        .severity(Severity.DEBUG)
+                        .build())
+                .origin(Origin.builder()
+                        .origin("localhost")
+                        .environment(Environment.DEV)
+                        .build())
+                .reportedBy(new User())
+                .build();
+    }
+
+    private Log createLog(Severity severity, String origin, Environment environment, String logDetail) {
+        return Log.builder()
+                .archived(false)
+                .hash(1)
+                .logDetail(LogDetail.builder()
+                        .message("Message")
+                        .details(logDetail)
+                        .severity(severity)
+                        .build())
+                .origin(Origin.builder()
+                        .origin(origin)
+                        .environment(environment)
+                        .build())
+                .reportedBy(new User())
+                .build();
+    }
+
 }
+
+//package dev.codenation.logs.service;
+//
+//import dev.codenation.logs.domain.entity.Log;
+//import dev.codenation.logs.repository.LogRepository;
+//import org.hamcrest.Matchers;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.mock.mockito.MockBean;
+//import org.springframework.test.context.junit4.SpringRunner;
+//
+//import java.util.Optional;
+//import java.util.UUID;
+//
+//import static org.junit.Assert.assertThat;
+//import static org.mockito.Mockito.when;
+//
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//
+//public class LogServiceTest {
+//
+//    @Autowired
+//    private LogService service;
+//
+//    @MockBean
+//    private LogRepository repository;
+//
+//    @Test
+//    public void abc() {
+//        UUID uuid = UUID.randomUUID();
+//        when(repository.findById(uuid)).thenReturn(Optional.of(getLog()));
+//
+//        Optional<Log> result = service.findById(uuid);
+//
+//        assertThat(result.get(), Matchers.notNullValue());
+//
+//    }
+//
+//    private Log getLog() {
+//        return new Log();
+//    }
+//
+//}
+

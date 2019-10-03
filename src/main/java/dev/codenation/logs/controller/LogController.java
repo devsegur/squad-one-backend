@@ -4,7 +4,7 @@ import dev.codenation.logs.domain.entity.Log;
 import dev.codenation.logs.dto.request.LogArchiveRequestDTO;
 import dev.codenation.logs.dto.request.LogCreationDTO;
 import dev.codenation.logs.dto.request.LogFilterRequestDTO;
-import dev.codenation.logs.dto.response.AllLogSummaryResponseDTO;
+import dev.codenation.logs.dto.response.LogResponseDTO;
 import dev.codenation.logs.dto.response.LogSumaryResponseDTO;
 import dev.codenation.logs.exception.message.log.LogMismatchIdsException;
 import dev.codenation.logs.exception.message.log.LogNotFoundException;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,16 +26,9 @@ public class LogController {
     private LogService logService;
 
     @GetMapping("/{logId}")
-    public Log findById(@PathVariable UUID logId) throws LogNotFoundException {
-        return logService.findById(logId).orElseThrow(LogNotFoundException::new);
+    public LogResponseDTO findById(@PathVariable UUID logId) throws LogNotFoundException {
+        return logService.findOneById(logId);
     }
-
-//    @GetMapping
-//    public List<AllLogSummaryResponseDTO> findAll() {
-//        return logService.findAll();
-//    }
-
-
     @GetMapping("/sumarized")
     public Page<LogSumaryResponseDTO> findAllSumarized(LogFilterRequestDTO filter, Pageable page) {
         return logService.findAllGroupByHash(filter, page);

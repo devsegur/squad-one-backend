@@ -1,11 +1,10 @@
-package dev.codenation.logs.authentication;
+package dev.codenation.logs.auth;
 
-import dev.codenation.logs.domain.enums.FrontendAuthEnum;
+import dev.codenation.logs.domain.enums.FrontEndAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -33,8 +32,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient(FrontendAuthEnum.WHO_IS_MINE_BEAUTY_FRONTEND_APPLICATION.name())
-                .secret(new BCryptPasswordEncoder().encode(FrontendAuthEnum.YOU_IS.name()))
+                .withClient(FrontEndAuth.WHO_IS_MINE_BEAUTY_FRONTEND_APPLICATION.name())
+                .secret(WebSecurityConfig.cryptPasswordEncoder().encode(FrontEndAuth.YOU_IS.name()))
                 .authorizedGrantTypes("password","authorization-code","refresh-token","implicit")
                 .scopes("read","write","trust")
                 .accessTokenValiditySeconds(ACCESS_TOKEN_INITIAL_SECONDS)

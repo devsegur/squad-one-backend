@@ -1,4 +1,4 @@
-package dev.codenation.logs.authentication;
+package dev.codenation.logs.auth;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,7 +14,8 @@ public class ResourcesConfig  extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/**").authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/user").permitAll()
+                .antMatchers(HttpMethod.POST,"/user").permitAll()
+                .antMatchers("/sso").permitAll()
                 .anyRequest().authenticated();
     }
 }

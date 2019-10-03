@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @FrameworkEndpoint
-public class RevokeTokensController {
+public class TokenController {
 
     @Resource(name = "consumerTokenServices")
     ConsumerTokenServices tokenServices;
@@ -27,6 +27,4 @@ public class RevokeTokensController {
                 return "ok";
         }).orElse(null);
     }
-
-
 }

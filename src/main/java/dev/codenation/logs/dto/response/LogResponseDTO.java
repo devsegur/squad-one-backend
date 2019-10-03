@@ -3,15 +3,21 @@ package dev.codenation.logs.dto.response;
 import dev.codenation.logs.domain.vo.Origin;
 import dev.codenation.logs.domain.vo.UserInformation;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
-public class AllLogSummaryResponseDTO {
+public class LogResponseDTO {
 
     public String hash;
 
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id;
 
     public String message;
 
@@ -19,11 +25,11 @@ public class AllLogSummaryResponseDTO {
 
     public String severity;
 
-    public String environment;
-
     public Origin origin;
 
     public String archived;
+
+    public UserInformation archivedBy;
 
     public UserInformation reportedBy;
 

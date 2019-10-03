@@ -1,26 +1,25 @@
 package dev.codenation.logs.service;
 
 import dev.codenation.logs.domain.entity.User;
+import dev.codenation.logs.exception.message.log.LogNotFoundException;
 import dev.codenation.logs.repository.UserRepository;
 import dev.codenation.logs.util.UserUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.List;
 
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-@AutoConfigurationPackage
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserServiceTest {
@@ -35,7 +34,7 @@ public class UserServiceTest {
     private UserRepository repository;
 
     @Test
-    public void WhenFindByValidId_ReturnUser() {
+    public void WhenFindByValidId_ReturnUser() throws LogNotFoundException {
         UUID id = UUID.randomUUID();
         User userExpected = userUtil.createUser();
         userExpected.setId(id);

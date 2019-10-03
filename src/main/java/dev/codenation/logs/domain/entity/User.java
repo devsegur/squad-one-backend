@@ -1,10 +1,9 @@
 package dev.codenation.logs.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.codenation.logs.auth.WebSecurityConfig;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,23 +42,30 @@ public class User {
     @NotNull
     @Email
     @Size(max = 250)
+    @Column(unique=true)
     private String email;
 
-    @NotNull
-    @Size(max = 100)
     private String password;
 
     @OneToMany(mappedBy = "reportedBy")
     private List<Log> logs;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "archivedBy")
     private List<Log> archivedLogs;
+
+    @Builder.Default
+    private Boolean active = true;
+
+    @LastModifiedDate
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime updatedAt;
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime updatedAt;
+    public void setPassword(String value){
+        this.password = new WebSecurityConfig().cryptPasswordEncoder().encode(value);
+    }
 }

@@ -1,21 +1,21 @@
 package dev.codenation.logs.service;
 
 import dev.codenation.logs.domain.entity.Log;
-import dev.codenation.logs.domain.vo.UserInformation;
 import dev.codenation.logs.dto.request.LogArchiveRequestDTO;
 import dev.codenation.logs.dto.request.LogCreationDTO;
 import dev.codenation.logs.dto.request.LogFilterRequestDTO;
-import dev.codenation.logs.dto.response.AllLogSummaryResponseDTO;
+import dev.codenation.logs.dto.response.LogResponseDTO;
 import dev.codenation.logs.dto.response.LogSumaryResponseDTO;
+import dev.codenation.logs.exception.message.log.LogNotFoundException;
 import dev.codenation.logs.mapper.LogMapper;
 import dev.codenation.logs.repository.LogRepository;
 import dev.codenation.logs.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,9 +50,22 @@ public class LogService extends AbstractService<LogRepository, Log, UUID> {
                 pageable);
     }
 
-//    public List<AllLogSummaryResponseDTO> findAll() {
-//        return mapper.map(repository.findAll());
-//    }
+    public Optional<Log> delete(UUID logId) {
+        return repository.findById(logId).map(l -> {
+            repository.delete(l);
+            return l;
+        });
+    }
+
+    public Log save(LogCreationDTO logCreationDTO){
+        logCreationDTO.setHash(logCreationDTO.getMessage().hashCode());
+        logCreationDTO.setReportedBy(userService.getUserInformation());
+        return repository.save(mapper.map(logCreationDTO));
+    }
+
+    public LogResponseDTO findOneById(UUID id) throws LogNotFoundException {
+        return mapper.map(repository.findById(id).orElseThrow(LogNotFoundException::new));
+    }
 
     public Optional<Log> archiveLogById(UUID logId, LogArchiveRequestDTO filter) {
         return repository.findById(logId).map(l -> setArchivedLogAndSave(filter, l));
@@ -66,16 +79,4 @@ public class LogService extends AbstractService<LogRepository, Log, UUID> {
         return repository.saveAndFlush(log);
     }
 
-    public Optional<Log> delete(UUID logId) {
-        return repository.findById(logId).map(l -> {
-            repository.delete(l);
-            return l;
-        });
-    }
-
-    public Log save(LogCreationDTO logCreationDTO){
-        logCreationDTO.setHash(logCreationDTO.getMessage().hashCode());
-        logCreationDTO.setReportedBy(userService.getUserInformation());
-       return repository.save(mapper.map(logCreationDTO));
-    }
 }

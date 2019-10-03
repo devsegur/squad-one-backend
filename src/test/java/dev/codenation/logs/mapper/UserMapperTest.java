@@ -1,11 +1,9 @@
 package dev.codenation.logs.mapper;
 
+import dev.codenation.logs.auth.WebSecurityConfig;
 import dev.codenation.logs.domain.entity.User;
 import dev.codenation.logs.dto.request.UserFilterRequestDTO;
 import dev.codenation.logs.dto.request.UserRequestDTO;
-import dev.codenation.logs.util.UserFilterRequestDTOUtil;
-import dev.codenation.logs.util.UserRequestDTOUtil;
-import net.bytebuddy.asm.Advice;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,35 +17,49 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest
 public class UserMapperTest {
 
-        @Autowired
-        private UserMapper mapper;
+    @Autowired
+    private UserMapper mapper;
 
-        @Autowired
-        private UserFilterRequestDTOUtil userFilterRequestDTOUtil;
+    @Test
+    public void WhenMapUserRequestDTO_ReturnUser() {
+        UserRequestDTO request = createUserRequestDTO();
 
-        @Autowired
-        private UserRequestDTOUtil userRequestDTOUtil;
+        User user = mapper.map(request);
 
-        @Test
-        public void WhenMapUserRequestDTO_ReturnUser(){
-            UserRequestDTO request = userRequestDTOUtil.createUserRequestDTO();
+        Boolean matches = WebSecurityConfig.cryptPasswordEncoder().matches("Password", user.getPassword());
 
-            User user = mapper.map(request);
+        assertThat(user.getEmail(), Matchers.equalTo("test@test.com"));
+        assertThat(user.getFirstName(), Matchers.equalTo("User"));
+        assertThat(user.getLastName(), Matchers.equalTo("Test"));
+        assertThat(matches, Matchers.equalTo(Boolean.TRUE));
+    }
 
-            assertThat(user.getEmail(), Matchers.equalTo("test@test.com"));
-            assertThat(user.getFirstName(), Matchers.equalTo("User"));
-            assertThat(user.getLastName(), Matchers.equalTo("Test"));
-            assertThat(user.getPassword(), Matchers.equalTo("Password"));
-        }
+    @Test
+    public void WhenMapUserFilterRequestDTO_ReturnUser() {
+        UserFilterRequestDTO request = createUserFilterRequestDTO();
 
-        @Test
-        public void WhenMapUserFilterRequestDTO_ReturnUser(){
-            UserFilterRequestDTO request = userFilterRequestDTOUtil.createUserFilterRequestDTO();
+        User user = mapper.map(request);
 
-            User user = mapper.map(request);
+        assertThat(user.getEmail(), Matchers.equalTo("test@test.com"));
+        assertThat(user.getFirstName(), Matchers.equalTo("User"));
+        assertThat(user.getLastName(), Matchers.equalTo("Test"));
+    }
 
-            assertThat(user.getEmail(), Matchers.equalTo("test@test.com"));
-            assertThat(user.getFirstName(), Matchers.equalTo("User"));
-            assertThat(user.getLastName(), Matchers.equalTo("Test"));
-        }
+    private UserRequestDTO createUserRequestDTO() {
+        return UserRequestDTO.builder()
+                .email("test@test.com")
+                .firstName("User")
+                .lastName("Test")
+                .password("Password")
+                .build();
+    }
+
+    private UserFilterRequestDTO createUserFilterRequestDTO() {
+        return UserFilterRequestDTO.builder()
+                .email("test@test.com")
+                .firstName("User")
+                .lastName("Test")
+                .build();
+    }
+
 }

@@ -1,14 +1,15 @@
 package dev.codenation.logs.domain.vo;
 
 import dev.codenation.logs.domain.entity.User;
+import lombok.Data;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import java.util.Collection;
 
-public class UserAuth implements AuthenticatedPrincipal,UserDetails {
+@Data
+public class UserAuth implements AuthenticatedPrincipal, UserDetails {
 
     private String login;
 
@@ -56,6 +57,6 @@ public class UserAuth implements AuthenticatedPrincipal,UserDetails {
 
     @Override
     public String getName() {
-        return null;
+        return getUsername();
     }
 }

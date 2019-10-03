@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
 import java.io.Serializable;
 
 @Builder
@@ -20,9 +22,11 @@ import java.io.Serializable;
 public class LogDetail implements Serializable {
 
     @NotNull
+    @Max(2000)
     private String message;
 
     @NotNull
+    @Max(2000)
     private String details;
 
     @NotNull

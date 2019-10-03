@@ -1,14 +1,13 @@
 package dev.codenation.logs.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import dev.codenation.logs.domain.vo.LogDetail;
 import dev.codenation.logs.domain.vo.Origin;
+import jdk.nashorn.internal.runtime.options.Option;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Data
@@ -60,5 +60,16 @@ public class Log {
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
+
+    public void setLogDetail(LogDetail detail) {
+        this.logDetail = detail;
+        setHash();
+    }
+
+    public void setHash() {
+        if (logDetail != null && !logDetail.getMessage().isEmpty()) {
+            this.hash = logDetail.getMessage().hashCode();
+        }
+    }
 
 }
