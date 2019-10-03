@@ -70,8 +70,7 @@ public class UserControllerTest {
 //    }
 
     @Test
-    public void verifyingIfSavesUserSuccessfullyWhenAuthenticated() throws Exception {
-
+    public void verifyingSavesUserSuccessfully() throws Exception {
         getAuthHeader();
         //Dado
         UserRequestDTO userRequestDTO = userRequestDTOUtil.createUserRequestDTOstefano();
@@ -96,7 +95,6 @@ public class UserControllerTest {
 
         user.andExpect(status().is(401));
     }
-
 
 
     private void getAuthHeader() throws Exception {
