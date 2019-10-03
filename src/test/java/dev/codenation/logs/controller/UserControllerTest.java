@@ -84,6 +84,18 @@ public class UserControllerTest {
         user.andExpect(status().isCreated());
     }
 
+    @Test
+    public void verifyingIfSavesUserWhenNotAuthenticated() throws Exception {
+        UserRequestDTO userRequestDTO = userRequestDTOUtil.createUserRequestDTOstefano();
+
+        ResultActions user = mvc.perform(post("/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header("Authorization", "Bearer " + this.token)
+                .content(UserRequestDTOUtil.convertObjectToJsonBytes(userRequestDTO)));
+
+        user.andExpect(status().is(401));
+    }
+
 
     private void getAuthHeader() throws Exception {
         if (token.isEmpty()) {
